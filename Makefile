@@ -34,23 +34,10 @@ rebuild:
 	docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE) up -d --build
 
 test:
-	pytest -q
+	SKIP_DB_INIT=true pytest -q
 
 clean:
 	docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE) down --remove-orphans
 
 reset:
 	docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE) down -v --remove-orphans
-
-restart:
-	make down
-	make up
-
-logs-api:
-	docker compose logs -f api
-
-logs-db:
-	docker compose logs -f postgres
-
-logs-redis:
-	docker compose logs -f redis
